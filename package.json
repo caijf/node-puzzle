@@ -6,7 +6,20 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "test:basic": "ts-node examples/basic",
-    "test:remote": "ts-node examples/remote"
+    "test:remote": "ts-node examples/remote",
+    "lint": "eslint --ext .js,.mjs,.jsx,.ts,.tsx src",
+    "lint:fix": "npm run lint:js -- --fix",
+    "prettier": "prettier --write **/*",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "**/*.{js,mjs,jsx,ts,tsx}": "eslint",
+    "**/*.{css,scss,less,js,mjs,jsx,ts,tsx,json,md}": "prettier -w"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   },
   "keywords": [],
   "author": "caijf",
@@ -19,7 +32,16 @@
     "pureimage": "^0.4.13"
   },
   "devDependencies": {
+    "@commitlint/cli": "^18.2.0",
+    "@commitlint/config-conventional": "^18.1.0",
     "@types/node": "^20.8.9",
+    "@typescript-eslint/eslint-plugin": "^6.9.1",
+    "@typescript-eslint/parser": "^6.9.1",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^8.52.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^15.0.2",
+    "prettier": "^3.0.3",
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2"
   }

@@ -9,7 +9,7 @@ const mathPI = Math.PI;
 export enum Point {
   None, // 没有
   Outer, // 外部
-  Inner, // 内部
+  Inner // 内部
 }
 export const pointArray = [Point.None, Point.Outer, Point.Inner];
 
@@ -31,7 +31,7 @@ export function getRandomPoints(pointNum?: 2 | 3 | 4) {
     top: pick(pointArray),
     right: pick(pointArray),
     bottom: pick(pointArray),
-    left: pick(pointArray),
+    left: pick(pointArray)
   };
   type PointKey = keyof typeof points;
   const pointsKeys = Object.keys(points) as PointKey[];
@@ -89,18 +89,18 @@ export function drawPuzzle(
     w?: number;
     h?: number;
     points?:
-    | 2
-    | 3
-    | 4
-    | {
-      // 拼图点
-      top: Point;
-      right: Point;
-      bottom: Point;
-      left: Point;
-    };
+      | 2
+      | 3
+      | 4
+      | {
+          // 拼图点
+          top: Point;
+          right: Point;
+          bottom: Point;
+          left: Point;
+        };
     margin?: number; // 外部留白
-  } = {},
+  } = {}
 ) {
   const { x = 0, y = 0, w = 60, h = 60 } = options;
   let { points, margin = 0 } = options;
@@ -122,7 +122,7 @@ export function drawPuzzle(
     x: x + margin,
     y: y + margin,
     w: w - c2r - margin * 2,
-    h: h - c2r - margin * 2,
+    h: h - c2r - margin * 2
   };
   const w1_2 = rect.w / 2; // 矩形一半宽度
   const h1_2 = rect.h / 2; // 矩形一半高度
@@ -213,7 +213,7 @@ export function streamToBuffer(stream: ReadStream) {
   return new Promise<Buffer>((resolve, reject) => {
     const buffers: any[] = [];
     stream.on('error', reject);
-    stream.on('data', data => buffers.push(data));
+    stream.on('data', (data) => buffers.push(data));
     stream.on('end', () => resolve(Buffer.concat(buffers)));
   });
 }
@@ -233,12 +233,13 @@ export function getImageBuffer(input: string | Buffer): Promise<Buffer> {
     }
 
     // http 或 https 图片地址
-    const client = input.indexOf('https') === 0 ? https : (input.indexOf('http') === 0 ? http : undefined);
+    const client =
+      input.indexOf('https') === 0 ? https : input.indexOf('http') === 0 ? http : undefined;
     if (client) {
       client.get(input, (res) => {
         const chunks: any[] = [];
         res.on('error', reject);
-        res.on('data', chunk => chunks.push(chunk));
+        res.on('data', (chunk) => chunks.push(chunk));
         res.on('end', () => {
           resolve(Buffer.concat(chunks));
         });
@@ -246,9 +247,11 @@ export function getImageBuffer(input: string | Buffer): Promise<Buffer> {
     } else {
       // 本地路径
       const stream = fs.createReadStream(input);
-      streamToBuffer(stream).then(buffer => {
-        resolve(buffer);
-      }).catch(reject);
+      streamToBuffer(stream)
+        .then((buffer) => {
+          resolve(buffer);
+        })
+        .catch(reject);
     }
   });
 }

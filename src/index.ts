@@ -1,5 +1,5 @@
-import * as PImage from "pureimage";
-import { Writable as WriteStream } from "stream";
+import * as PImage from 'pureimage';
+import { Writable as WriteStream } from 'stream';
 import sizeOf from 'image-size';
 import { drawPuzzle, getRandomPoints, getImageBuffer, bufferToStream, getRandomInt } from './util';
 
@@ -8,7 +8,7 @@ type ImageType = 'png' | 'jpeg';
 type Output = {
   bg: WriteStream;
   puzzle: WriteStream;
-}
+};
 
 type Options = {
   // 拼图
@@ -30,7 +30,7 @@ type Options = {
   bgImageType?: ImageType; // 背景图导出类型。默认 jpeg
   quality?: number; // 导出图片质量，仅作用于 `jepg` 图片。默认 80 。
   pngOptions?: Parameters<typeof PImage.encodePNGToStream>[2]; // 导出 png 图片配置，仅作用于 `png` 图片。
-}
+};
 
 async function createPuzzle(input: string | Buffer, output: Output, options: Options = {}) {
   const {
@@ -60,7 +60,8 @@ async function createPuzzle(input: string | Buffer, output: Output, options: Opt
 
   console.log('originSizeObj: ', originSizeObj);
 
-  const decodeMethod = originSizeObj.type === 'png' ? PImage.decodePNGFromStream : PImage.decodeJPEGFromStream;
+  const decodeMethod =
+    originSizeObj.type === 'png' ? PImage.decodePNGFromStream : PImage.decodeJPEGFromStream;
   const stream = await bufferToStream(buffer);
   // 拼图点不支持自定义，默认2个点
   const points = getRandomPoints(2);
