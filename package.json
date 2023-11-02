@@ -1,17 +1,32 @@
 {
   "name": "node-puzzle",
   "version": "0.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Node.js 生成滑块验证码的拼图和背景图。",
+  "main": "dist/cjs/index.js",
+  "module": "dist/es/index.js",
+  "types": "dist/types/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "test:basic": "ts-node examples/basic",
     "test:remote": "ts-node examples/remote",
+    "test:unequal": "ts-node examples/unequal",
+    "test:size": "ts-node examples/size",
+    "test:coord": "ts-node examples/coord",
+    "test:export": "ts-node examples/export",
+    "build": "npm run build:es && npm run build:cjs && npm run build:types",
+    "build:es": "rm -rf dist/es && tsc --outDir dist/es -p tsconfig.build.json -m esnext",
+    "build:cjs": "rm -rf dist/cjs && tsc --outDir dist/cjs -p tsconfig.build.json",
+    "build:types": "rm -rf dist/types && tsc --outDir dist/types -p tsconfig.build.json -d --emitDeclarationOnly",
     "lint": "eslint --ext .js,.mjs,.jsx,.ts,.tsx src",
     "lint:fix": "npm run lint:js -- --fix",
     "prettier": "prettier --write **/*",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "postpublish": "npm run build"
   },
+  "files": [
+    "dist",
+    "docs"
+  ],
   "lint-staged": {
     "**/*.{js,mjs,jsx,ts,tsx}": "eslint",
     "**/*.{css,scss,less,js,mjs,jsx,ts,tsx,json,md}": "prettier -w"

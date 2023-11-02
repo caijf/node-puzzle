@@ -38,7 +38,7 @@ export function getRandomPoints(pointNum?: 2 | 3 | 4) {
   const verticalDirs = ['top', 'bottom'] as PointKey[];
   const horizontalDirs = ['left', 'right'] as PointKey[];
 
-  console.log('default points: ', points);
+  // console.log('default points: ', points);
 
   // 保证上下 和 左右 都必须有一个外部的拼图点
   if (points.top === Point.Outer && points.bottom === Point.Outer) {
@@ -76,7 +76,7 @@ export function getRandomPoints(pointNum?: 2 | 3 | 4) {
     }
   }
 
-  console.log('after points: ', points);
+  // console.log('after points: ', points);
   return points;
 }
 
@@ -110,8 +110,6 @@ export function drawPuzzle(
   if (typeof points === 'number' || !points) {
     points = getRandomPoints(points);
   }
-
-  console.log(points);
 
   const r = (Math.min(w, h) - margin * 2) * 0.15; // 适合拼图点的比例 0.15
   const l = Math.hypot(r, r); // 斜边长度

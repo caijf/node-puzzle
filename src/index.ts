@@ -3,8 +3,6 @@ import { Writable as WriteStream } from 'stream';
 import sizeOf from 'image-size';
 import { drawPuzzle, getRandomPoints, getImageBuffer, bufferToStream, getRandomInt } from './util';
 
-type ImageType = 'png' | 'jpeg';
-
 type Output = {
   bg: WriteStream;
   puzzle: WriteStream;
@@ -20,6 +18,7 @@ type Options = {
   x?: number; // x 轴偏移值，如果不传内部随机生成。
   y?: number; // y 轴偏移值，如果不传内部随机生成。
   margin?: number; // 上下左右留白。默认 2
+  equalHeight?: boolean; // 等高。默认 true
 
   // 背景图
   bgWidth?: number; // 背景图宽度。默认 图片宽度
@@ -27,7 +26,7 @@ type Options = {
   bgOffset?: [number, number]; // 背景图偏移值。 默认 [0,0]
 
   // 导出配置
-  bgImageType?: ImageType; // 背景图导出类型。默认 jpeg
+  bgImageType?: 'png' | 'jpeg'; // 背景图导出类型。默认 jpeg
   quality?: number; // 导出图片质量，仅作用于 `jepg` 图片。默认 80 。
   pngOptions?: Parameters<typeof PImage.encodePNGToStream>[2]; // 导出 png 图片配置，仅作用于 `png` 图片。
 };
@@ -43,6 +42,7 @@ async function createPuzzle(input: string | Buffer, output: Output, options: Opt
     x: outX,
     y: outY,
     margin = 2,
+    equalHeight = true,
 
     // 背景图
     bgWidth: outBgWidth,
@@ -58,7 +58,7 @@ async function createPuzzle(input: string | Buffer, output: Output, options: Opt
   const buffer = await getImageBuffer(input);
   const originSizeObj = sizeOf(buffer);
 
-  console.log('originSizeObj: ', originSizeObj);
+  // console.log('originSizeObj: ', originSizeObj);
 
   const decodeMethod =
     originSizeObj.type === 'png' ? PImage.decodePNGFromStream : PImage.decodeJPEGFromStream;
@@ -106,14 +106,17 @@ async function createPuzzle(input: string | Buffer, output: Output, options: Opt
   ctx.drawImage(originImg, bgOffset[0], bgOffset[1], bgWidth, bgHeight, 0, 0, bgWidth, bgHeight);
 
   // 拼图
-  const puzzle = PImage.make(width, height);
+  const puzzleCanvasHeight = equalHeight ? bgHeight : height;
+  const puzzleY = equalHeight ? y : 0;
+
+  const puzzle = PImage.make(width, puzzleCanvasHeight);
   const puzzleCtx = puzzle.getContext('2d');
   puzzleCtx.strokeStyle = borderColor;
   puzzleCtx.lineWidth = borderWidth;
-  puzzleCtx.clearRect(0, 0, width, height);
-  drawPuzzle(puzzleCtx as any, { x: 0, y: 0, w: width, h: height, points, margin });
+  puzzleCtx.clearRect(0, 0, width, puzzleCanvasHeight);
+  drawPuzzle(puzzleCtx as any, { x: 0, y: puzzleY, w: width, h: height, points, margin });
   puzzleCtx.clip();
-  puzzleCtx.drawImage(img, x, y, width, height, 0, 0, width, height);
+  puzzleCtx.drawImage(img, x, y, width, height, 0, puzzleY, width, height);
 
   // 背景图添加遮罩
   const maskCanvas = PImage.make(width, height);
@@ -136,7 +139,8 @@ async function createPuzzle(input: string | Buffer, output: Output, options: Opt
     bgEncodeMethod(img, output.bg, bgQualityOptions)
   ]).then(() => {
     return {
-      x
+      x,
+      y: equalHeight ? 0 : y
     };
   });
 }
