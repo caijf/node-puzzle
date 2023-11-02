@@ -1,0 +1,26 @@
+{
+  "name": "node-puzzle",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:basic": "ts-node examples/basic",
+    "test:remote": "ts-node examples/remote"
+  },
+  "keywords": [],
+  "author": "caijf",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.19.0"
+  },
+  "dependencies": {
+    "image-size": "^1.0.2",
+    "pureimage": "^0.4.13"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.9",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  }
+}
