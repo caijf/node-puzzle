@@ -36,9 +36,19 @@
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
-  "keywords": [],
+  "keywords": [
+    "puzzle",
+    "slider-captcha",
+    "slider",
+    "captcha",
+    "jigsaw"
+  ],
   "author": "caijf",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/caijf/node-puzzle/issues"
+  },
+  "homepage": "https://github.com/caijf/node-puzzle#readme",
   "engines": {
     "node": ">=14.19.0"
   },
