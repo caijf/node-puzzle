@@ -40,7 +40,7 @@ createPuzzle('./sunflower.jpg', {
 
 `sunflower.jpg`
 
-![原图](./docs/sunflower.jpg)
+![origin](./docs/sunflower.jpg)
 
 ▼▼▼
 
@@ -48,11 +48,11 @@ createPuzzle('./sunflower.jpg', {
 
 `bg.jpg`
 
-![背景图](./docs/bg.jpg)
+![bg](./docs/bg.jpg)
 
 `puzzle.png`
 
-![拼图](./docs/puzzle.png)
+![puzzle](./docs/puzzle.png)
 
 ▼▼▼
 
@@ -111,4 +111,3 @@ type createPuzzle = (
 
 [npm]: https://img.shields.io/npm/v/node-puzzle.svg
 [npm-url]: https://npmjs.com/package/node-puzzle
-[github]: https://github.com/caijf/node-puzzle

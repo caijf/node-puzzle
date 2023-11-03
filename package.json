@@ -45,6 +45,10 @@
   ],
   "author": "caijf",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/caijf/node-puzzle.git"
+  },
   "bugs": {
     "url": "https://github.com/caijf/node-puzzle/issues"
   },
