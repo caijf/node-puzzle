@@ -1,6 +1,6 @@
 {
   "name": "node-puzzle",
-  "version": "0.0.5",
+  "version": "1.0.0",
   "description": "Node.js 生成滑块验证码的拼图和背景图。",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
