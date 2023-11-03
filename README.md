@@ -40,7 +40,7 @@ createPuzzle('./sunflower.jpg', {
 
 `sunflower.jpg`
 
-[![origin](./docs/sunflower.jpg)][github]
+![原图](./docs/sunflower.jpg)
 
 ▼▼▼
 
@@ -48,11 +48,11 @@ createPuzzle('./sunflower.jpg', {
 
 `bg.jpg`
 
-[![bg](./docs/bg.jpg)][github]
+![背景图](./docs/bg.jpg)
 
 `puzzle.png`
 
-[![puzzle](./docs/puzzle.png)][github]
+![拼图](./docs/puzzle.png)
 
 ▼▼▼
 
