@@ -1,7 +1,8 @@
 import * as PImage from 'pureimage';
 import { Writable as WriteStream } from 'stream';
 import sizeOf from 'image-size';
-import { drawPuzzle, getRandomPoints, getImageBuffer, bufferToStream, getRandomInt } from './util';
+import { getBuffer, bufferToStream } from 'node-useful';
+import { drawPuzzle, getRandomPoints, getRandomInt } from './util';
 
 type Output = {
   bg: WriteStream;
@@ -55,7 +56,7 @@ async function createPuzzle(input: string | Buffer, output: Output, options: Opt
     pngOptions
   } = options;
 
-  const buffer = await getImageBuffer(input);
+  const buffer = await getBuffer(input);
   const originSizeObj = sizeOf(buffer);
 
   // console.log('originSizeObj: ', originSizeObj);

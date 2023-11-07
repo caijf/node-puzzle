@@ -1,8 +1,3 @@
-import https from 'https';
-import http from 'http';
-import fs, { ReadStream } from 'fs';
-import { Duplex } from 'stream';
-
 const mathPI = Math.PI;
 
 // 拼图点
@@ -205,51 +200,4 @@ export function drawPuzzle(
   // ctx.fill();
 
   // ctx.strokeRect(x, y, w, h);
-}
-
-export function streamToBuffer(stream: ReadStream) {
-  return new Promise<Buffer>((resolve, reject) => {
-    const buffers: any[] = [];
-    stream.on('error', reject);
-    stream.on('data', (data) => buffers.push(data));
-    stream.on('end', () => resolve(Buffer.concat(buffers)));
-  });
-}
-
-export function bufferToStream(buffer: Buffer) {
-  const stream = new Duplex();
-  stream.push(buffer);
-  stream.push(null);
-  return stream;
-}
-
-export function getImageBuffer(input: string | Buffer): Promise<Buffer> {
-  return new Promise((resolve, reject) => {
-    if (typeof input !== 'string') {
-      resolve(input);
-      return;
-    }
-
-    // http 或 https 图片地址
-    const client =
-      input.indexOf('https') === 0 ? https : input.indexOf('http') === 0 ? http : undefined;
-    if (client) {
-      client.get(input, (res) => {
-        const chunks: any[] = [];
-        res.on('error', reject);
-        res.on('data', (chunk) => chunks.push(chunk));
-        res.on('end', () => {
-          resolve(Buffer.concat(chunks));
-        });
-      });
-    } else {
-      // 本地路径
-      const stream = fs.createReadStream(input);
-      streamToBuffer(stream)
-        .then((buffer) => {
-          resolve(buffer);
-        })
-        .catch(reject);
-    }
-  });
 }
