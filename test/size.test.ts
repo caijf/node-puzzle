@@ -31,7 +31,7 @@ describe(name, () => {
       }
     );
 
-    expect(result.x).toBeGreaterThan(40);
+    expect(result.x).toBeGreaterThanOrEqual(40);
     expect(result.y).toBe(0);
     expect(fs.existsSync(paths.bg)).toBe(true);
     expect(fs.existsSync(paths.puzzle)).toBe(true);

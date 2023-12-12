@@ -22,14 +22,13 @@ pnpm add node-puzzle
 
 ```typescript
 import fs from 'fs';
-import path from 'path';
 import createPuzzle from 'node-puzzle';
 
 // 第一个参数是图片地址，支持本地路径和远程地址
 // 第二个参数是处理后的背景图和拼图写入流（如写入到路径）
 createPuzzle('./sunflower.jpg', {
-  bg: fs.createWriteStream(path.join(__dirname, 'bg.jpg')),
-  puzzle: fs.createWriteStream(path.join(__dirname, 'puzzle.png'))
+  bg: fs.createWriteStream('bg.jpg'),
+  puzzle: fs.createWriteStream('puzzle.png')
 }).then((res) => {
   // 背景图和拼图处理完成后，返回中包含拼图 x 轴和 y 轴偏移值
   console.log(res); // { x: 229, y: 0 }
