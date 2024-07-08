@@ -1,7 +1,7 @@
 import * as PImage from 'pureimage';
 import fs from 'fs';
 import path from 'path';
-import { drawPuzzle, getRandomPoints } from '../../src/util';
+import { drawPuzzle, getRandomPoints } from 'create-puzzle';
 
 // const WIDTH = 360;
 const HEIGHT = 160;
@@ -27,7 +27,7 @@ PImage.decodeJPEGFromStream(stream)
     puzzleCtx.strokeStyle = 'white';
     puzzleCtx.lineWidth = 2;
     puzzleCtx.clearRect(0, 0, PUZZLE_WIDTH, PUZZLE_HEIGHT);
-    drawPuzzle(puzzleCtx as any, { x: 0, y: sy, points, margin: 2 });
+    drawPuzzle(puzzleCtx as any, { x: 0, y: sy, points, margin: 2, needClosePath: false });
     puzzleCtx.clip();
     puzzleCtx.drawImage(
       img,
@@ -48,7 +48,7 @@ PImage.decodeJPEGFromStream(stream)
     maskCtx.fillStyle = 'rgba(255,255,255,0.85)';
     maskCtx.fillRect(0, 0, PUZZLE_WIDTH, PUZZLE_HEIGHT);
 
-    drawPuzzle(ctx as any, { x: sx, y: sy, points });
+    drawPuzzle(ctx as any, { x: sx, y: sy, points, needClosePath: false });
     ctx.clip();
     ctx.drawImage(maskCanvas, sx, sy, PUZZLE_WIDTH, PUZZLE_HEIGHT);
 

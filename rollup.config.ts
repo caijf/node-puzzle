@@ -14,7 +14,7 @@ const config: RollupOptions = {
       tsconfig: './tsconfig.build.json'
     })
   ],
-  external: ['pureimage', 'node-useful', 'image-size'],
+  external: ['pureimage', 'node-useful', 'image-size', 'create-puzzle', 'ut2'],
   output: [
     {
       format: 'cjs',

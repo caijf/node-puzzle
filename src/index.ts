@@ -2,7 +2,8 @@ import * as PImage from 'pureimage';
 import { Writable as WriteStream } from 'stream';
 import sizeOf from 'image-size';
 import { getBuffer, bufferToStream } from 'node-useful';
-import { drawPuzzle, getRandomPoints, getRandomInt } from './util';
+import { drawPuzzle, getRandomPoints } from 'create-puzzle';
+import { randomInt } from 'ut2';
 
 type Output = {
   bg: WriteStream;
@@ -85,8 +86,8 @@ async function createPuzzle(input: string | Buffer, output: Output, options: Opt
 
   const maxOffsetX = bgWidth - width;
   const maxOffsetY = bgHeight - height;
-  let x = typeof outX === 'undefined' ? getRandomInt(maxOffsetX, width) : outX || 0;
-  let y = typeof outY === 'undefined' ? getRandomInt(maxOffsetY) : outY || 0;
+  let x = typeof outX === 'undefined' ? randomInt(width, maxOffsetX) : outX || 0;
+  let y = typeof outY === 'undefined' ? randomInt(0, maxOffsetY) : outY || 0;
 
   if (x < 0) {
     x = 0;
@@ -115,7 +116,15 @@ async function createPuzzle(input: string | Buffer, output: Output, options: Opt
   puzzleCtx.strokeStyle = borderColor;
   puzzleCtx.lineWidth = borderWidth;
   puzzleCtx.clearRect(0, 0, width, puzzleCanvasHeight);
-  drawPuzzle(puzzleCtx as any, { x: 0, y: puzzleY, w: width, h: height, points, margin });
+  drawPuzzle(puzzleCtx as any, {
+    x: 0,
+    y: puzzleY,
+    w: width,
+    h: height,
+    points,
+    margin,
+    needClosePath: false
+  });
   puzzleCtx.clip();
   puzzleCtx.drawImage(img, x, y, width, height, 0, puzzleY, width, height);
 
@@ -126,7 +135,7 @@ async function createPuzzle(input: string | Buffer, output: Output, options: Opt
   maskCtx.fillStyle = fillColor;
   maskCtx.fillRect(0, 0, width, height);
 
-  drawPuzzle(ctx as any, { x, y, w: width, h: height, points, margin });
+  drawPuzzle(ctx as any, { x, y, w: width, h: height, points, margin, needClosePath: false });
   ctx.clip();
   ctx.drawImage(maskCanvas, x, y, width, height);
 
