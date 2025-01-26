@@ -102,10 +102,10 @@ async function createPuzzle(input: string | Buffer, output: Output, options: Opt
   }
 
   // 背景图
-  const img = PImage.make(bgWidth, bgHeight);
-  const ctx = img.getContext('2d');
-  ctx.clearRect(0, 0, bgWidth, bgHeight);
-  ctx.drawImage(originImg, bgOffset[0], bgOffset[1], bgWidth, bgHeight, 0, 0, bgWidth, bgHeight);
+  const bgCanvas = PImage.make(bgWidth, bgHeight);
+  const bgCtx = bgCanvas.getContext('2d');
+  bgCtx.clearRect(0, 0, bgWidth, bgHeight);
+  bgCtx.drawImage(originImg, bgOffset[0], bgOffset[1], bgWidth, bgHeight, 0, 0, bgWidth, bgHeight);
 
   // 拼图
   const puzzleCanvasHeight = equalHeight ? bgHeight : height;
@@ -126,7 +126,7 @@ async function createPuzzle(input: string | Buffer, output: Output, options: Opt
     needClosePath: false
   });
   puzzleCtx.clip();
-  puzzleCtx.drawImage(img, x, y, width, height, 0, puzzleY, width, height);
+  puzzleCtx.drawImage(bgCanvas, x, y, width, height, 0, puzzleY, width, height);
 
   // 背景图添加遮罩
   const maskCanvas = PImage.make(width, height);
@@ -135,9 +135,11 @@ async function createPuzzle(input: string | Buffer, output: Output, options: Opt
   maskCtx.fillStyle = fillColor;
   maskCtx.fillRect(0, 0, width, height);
 
-  drawPuzzle(ctx as any, { x, y, w: width, h: height, points, margin, needClosePath: false });
-  ctx.clip();
-  ctx.drawImage(maskCanvas, x, y, width, height);
+  bgCtx.strokeStyle = borderColor;
+  bgCtx.lineWidth = borderWidth;
+  drawPuzzle(bgCtx as any, { x, y, w: width, h: height, points, margin, needClosePath: false });
+  bgCtx.clip();
+  bgCtx.drawImage(maskCanvas, x, y, width, height);
 
   const bgImageTypeIsPng = bgImageType === 'png';
   const bgEncodeMethod = bgImageTypeIsPng ? PImage.encodePNGToStream : PImage.encodeJPEGToStream;
@@ -146,7 +148,7 @@ async function createPuzzle(input: string | Buffer, output: Output, options: Opt
   return Promise.all([
     PImage.encodePNGToStream(puzzle, output.puzzle, pngOptions),
     // @ts-ignore
-    bgEncodeMethod(img, output.bg, bgQualityOptions)
+    bgEncodeMethod(bgCanvas, output.bg, bgQualityOptions)
   ]).then(() => {
     return {
       x,
