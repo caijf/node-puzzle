@@ -14,7 +14,7 @@ const config: RollupOptions = {
       tsconfig: './tsconfig.build.json'
     })
   ],
-  external: ['pureimage', 'node-useful', 'image-size', 'create-puzzle', 'ut2'],
+  external: ['@napi-rs/canvas', 'create-puzzle', 'ut2'],
   output: [
     {
       format: 'cjs',

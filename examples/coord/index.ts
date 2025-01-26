@@ -2,17 +2,14 @@ import path from 'path';
 import fs from 'fs';
 import createPuzzle from '../../src';
 
-createPuzzle(
-  path.join(__dirname, '../../docs/sunflower.jpg'),
-  {
-    bg: fs.createWriteStream(path.join(__dirname, 'bg.jpg')),
-    puzzle: fs.createWriteStream(path.join(__dirname, 'puzzle.png'))
-  },
-  {
-    x: 100,
-    y: 20,
-    equalHeight: false
-  }
-).then((res) => {
+const input = path.join(__dirname, '../../docs/sunflower.jpg');
+
+createPuzzle(input, {
+  x: 100,
+  y: 20,
+  equalHeight: false
+}).then((res) => {
   console.log('res: ', res);
+  fs.writeFileSync(path.join(__dirname, 'bg.jpg'), res.bg);
+  fs.writeFileSync(path.join(__dirname, 'puzzle.png'), res.puzzle);
 });
