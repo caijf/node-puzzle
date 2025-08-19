@@ -32,7 +32,7 @@ createPuzzle('./sunflower.jpg').then((res) => {
   // 处理完成后，返回背景图、拼图和 `x`、`y` 轴偏移值
   console.log(res); // { bg: Buffer, puzzle: Buffer, x: 229, y: 0 }
   fs.writeFileSync('bg.jpg', res.bg);
-  fs.writeFileSync('puzzle.jpg', res.puzzle);
+  fs.writeFileSync('puzzle.png', res.puzzle);
 });
 ```
 
@@ -77,12 +77,6 @@ type createPuzzle = (
   x: number;
   y: number;
 }>;
-
-export enum Point {
-  None = 0,
-  Outer = 1,
-  Inner = 2
-}
 ```
 
 | 选项 | 描述 | 类型 | 默认值 |
