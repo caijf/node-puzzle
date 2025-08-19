@@ -6,31 +6,106 @@ export type Point = BasePoint;
 
 type Options = {
   // 拼图
-  borderWidth?: number; // 描边宽度。默认 1
-  borderColor?: string; // 描边颜色。默认 rgba(255,255,255,0.7)
-  fillColor?: string; // 填充颜色。默认 rgba(255,255,255,0.7)
-  points?: NonNullable<Parameters<typeof drawPuzzle>[1]>['points']; // 拼图点，不传默认随机2/3/4
-  width?: number; // 宽度。默认 60
-  height?: number; // 高度。默认 60
-  x?: number; // x 轴偏移值，如果不传内部随机生成。
-  y?: number; // y 轴偏移值，如果不传内部随机生成。
-  margin?: number; // 上下左右留白。默认 2
-  equalHeight?: boolean; // 等高。默认 true
-  format?: 'webp' | 'png' | 'avif'; // 图片格式，支持 `png` `webp` `avif`。默认 png
-  quality?: number; // 图片质量，仅作用于 `webp` 图片格式。默认 80
-  avifConfig?: AvifConfig; // `avif` 配置，仅作用于 `avif` 图片格式。
+  /**
+   * 拼图描边宽度。
+   * @default 1
+   */
+  borderWidth?: number;
+  /**
+   * 拼图描边颜色。
+   * @default rgba(255,255,255,0.7)
+   */
+  borderColor?: string;
+  /**
+   * 拼图填充颜色。
+   * @default rgba(255,255,255,0.7)
+   */
+  fillColor?: string;
+  /**
+   * 拼图点，不传默认随机`2` `3` `4`。
+   */
+  points?: NonNullable<Parameters<typeof drawPuzzle>[1]>['points'];
+  /**
+   * 拼图宽度。
+   * @default 60
+   */
+  width?: number;
+  /**
+   * 拼图高度。
+   * @default 60
+   */
+  height?: number;
+  /**
+   * 拼图 x 轴偏移值，如果不传内部随机生成。
+   */
+  x?: number;
+  /**
+   * 拼图 y 轴偏移值，如果不传内部随机生成。
+   */
+  y?: number;
+  /**
+   * 拼图上下左右留白。
+   * @default 2
+   */
+  margin?: number;
+  /**
+   * 拼图等高。如果值为 `true`，拼图高度与图片高度相等，`y` 轴偏移值为 `0`。
+   * @default true
+   */
+  equalHeight?: boolean;
+  /**
+   * 拼图图片格式，支持 `png` `webp` `avif`。
+   * @default 'png'
+   */
+  format?: 'webp' | 'png' | 'avif';
+  /**
+   * 拼图图片质量，仅作用于 `webp` 图片格式。
+   * @default 80
+   */
+  quality?: number;
+  /**
+   * 拼图 `avif` 配置，仅作用于 `avif` 图片格式。
+   */
+  avifConfig?: AvifConfig;
 
   // 背景图
-  bgWidth?: number; // 背景图宽度。默认 图片宽度
-  bgHeight?: number; // 背景图高度。默认 图片高度
-  bgOffset?: [number, number]; // 背景图偏移值。默认 [0,0]
-  bgFormat?: 'webp' | 'jpeg' | 'png' | 'avif'; // 图片格式，支持 `jpeg` `png` `webp` `avif`。默认 jpeg
-  bgQuality?: number; // 图片质量，仅作用于 `webp` 或 `jpeg` 图片格式。默认 `format` 值
-  bgAvifConfig?: AvifConfig; // `avif` 配置，仅作用于 `avif` 图片格式。默认 `avifConfig` 值
+  /**
+   * 背景图宽度。默认图片宽度。
+   */
+  bgWidth?: number;
+  /**
+   * 背景图高度。默认图片高度。
+   */
+  bgHeight?: number;
+  /**
+   * 背景图偏移值，对应 `x`、`y` 轴偏移值。
+   * @default [0,0]
+   */
+  bgOffset?: [number, number];
+  /**
+   * 背景图格式，支持 `jpeg` `png` `webp` `avif`。
+   * @default 'jpeg'
+   */
+  bgFormat?: 'webp' | 'jpeg' | 'png' | 'avif';
+  /**
+   * 背景图质量，仅作用于 `webp` 或 `jpeg` 图片格式。如果不传，默认 `quality` 值。
+   */
+  bgQuality?: number;
+  /**
+   * 背景图 `avif` 配置，仅作用于 `avif` 图片格式。如果不传，默认 `avifConfig` 值。
+   */
+  bgAvifConfig?: AvifConfig;
 };
 
 type InputType = Parameters<typeof loadImage>[0];
 
+/**
+ * 创建拼图。
+ *
+ * @param input 图片地址或 Buffer 或 Stream
+ * @param options 配置项
+ * @returns 背景图和拼图 Buffer ，以及 `x`、`y` 轴偏移值
+ */
 async function createPuzzle(input: InputType, options: Options = {}) {
   const {
     // 拼图

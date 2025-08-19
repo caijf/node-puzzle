@@ -78,38 +78,34 @@ type createPuzzle = (
   y: number;
 }>;
 
-// 配置项
-type Options = {
-  // 拼图
-  borderWidth?: number; // 描边宽度。默认 1
-  borderColor?: string; // 描边颜色。默认 rgba(255,255,255,0.7)
-  fillColor?: string; // 填充颜色。默认 rgba(255,255,255,0.7)
-  points?: NonNullable<Parameters<typeof drawPuzzle>[1]>['points']; // 拼图点，不传默认随机2/3/4
-  width?: number; // 宽度。默认 60
-  height?: number; // 高度。默认 60
-  x?: number; // x 轴偏移值，如果不传内部随机生成。
-  y?: number; // y 轴偏移值，如果不传内部随机生成。
-  margin?: number; // 上下左右留白。默认 2
-  equalHeight?: boolean; // 等高。默认 true
-  format?: 'webp' | 'png' | 'avif'; // 图片格式，支持 `png` `webp` `avif`。默认 png
-  quality?: number; // 图片质量，仅作用于 `webp` 图片格式。默认 80
-  avifConfig?: AvifConfig; // `avif` 配置，仅作用于 `avif` 图片格式。
-
-  // 背景图
-  bgWidth?: number; // 背景图宽度。默认 图片宽度
-  bgHeight?: number; // 背景图高度。默认 图片高度
-  bgOffset?: [number, number]; // 背景图偏移值。默认 [0,0]
-  bgFormat?: 'webp' | 'jpeg' | 'png' | 'avif'; // 图片格式，支持 `jpeg` `png` `webp` `avif`。默认 jpeg
-  bgQuality?: number; // 图片质量，仅作用于 `webp` 或 `jpeg` 图片格式。默认 `format` 值
-  bgAvifConfig?: AvifConfig; // `avif` 配置，仅作用于 `avif` 图片格式。默认 `avifConfig` 值
-};
-
 export enum Point {
   None = 0,
   Outer = 1,
   Inner = 2
 }
 ```
+
+| 选项 | 描述 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| borderWidth | 拼图描边宽度。 | `number` | `1` |
+| borderColor | 拼图描边颜色。 | `string` | `'rgba(255,255,255,0.7)'` |
+| fillColor | 拼图填充颜色。 | `string` | `'rgba(255,255,255,0.7)'` |
+| points | 拼图点，不传默认随机`2` `3` `4`。 | `numer` | - |
+| width | 拼图宽度。 | `number` | `60` |
+| height | 拼图高度。 | `number` | `60` |
+| x | 拼图 x 轴偏移值，如果不传内部随机生成。 | `number` | - |
+| y | 拼图 y 轴偏移值，如果不传内部随机生成。 | `number` | - |
+| margin | 拼图上下左右留白。 | `number` | `2` |
+| equalHeight | 拼图等高。如果值为 `true`，拼图高度与图片高度相等，`y` 轴偏移值为 `0`。 | `boolean` | `true` |
+| format | 拼图图片格式。 | `'png' \| 'webp' \| 'avif'` | `'png'` |
+| quality | 拼图图片质量，仅作用于 `webp` 图片格式。 | `number` | `80` |
+| avifConfig | 拼图 `avif` 配置，仅作用于 `avif` 图片格式。 | `AvifConfig` | - |
+| bgWidth | 背景图宽度。默认图片宽度。 | `number` | - |
+| bgHeight | 背景图高度。默认图片高度。 | `number` | - |
+| bgOffset | 背景图偏移值，对应 `x`、`y` 轴偏移值。 | `number` | `[0, 0]` |
+| bgFormat | 背景图格式。 | `'jpeg' \| 'png' \| 'webp' \| 'avif'` | `'jpeg'` |
+| bgQuality | 背景图质量，仅作用于 `webp` 或 `jpeg` 图片格式。如果不传，默认 `quality` 值。 | `number` | - |
+| bgAvifConfig | 背景图 `avif` 配置，仅作用于 `avif` 图片格式。如果不传，默认 `avifConfig` 值。 | `AvifConfig` | - |
 
 ## 感谢
 
